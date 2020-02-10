@@ -7,12 +7,20 @@ const browserSync = require('browser-sync');
 const webpackStream = require('webpack-stream');
 const imgMin = require('gulp-imagemin');
 const svgMin = require('gulp-svgmin');
+const sourcemaps = require('gulp-sourcemaps');
+const gutil = require('gulp-util');
+const gulpif = require('gulp-if');
+
+let dev;
+gutil.env.type === 'development' ? dev = true : dev = false;
 
 function css(){
     return gulp.src('./css/styles.less')
             .pipe(less())
+            .pipe(gulpif(dev, sourcemaps.init()))
             .pipe(autoprefixerCSS())           
             .pipe(minifyCSS())
+            .pipe(gulpif(dev, sourcemaps.write()))
             .pipe(gulp.dest('./build/css'))
             .pipe(browserSync.stream());
 }
@@ -44,7 +52,9 @@ function js(){
                                 }
                             }
                         ] 
-                    }
+                    },
+                    mode: dev ? 'development' : 'production',
+                    devtool: dev ? 'source-map' : 'none'
                 }
             ))
             .pipe(gulp.dest('./build/js'))
@@ -53,14 +63,14 @@ function js(){
 
 function image() {
     return gulp.src('./images/**/*')
-            .pipe(imgMin())
+            .pipe(gulpif(!dev, imgMin()))
             .pipe(gulp.dest('./build/images'))
             .pipe(browserSync.stream());
 }
 
 function svg() {
     return gulp.src('./icons/**/*')
-            .pipe(svgMin())
+            .pipe(gulpif(!dev, svgMin()))
             .pipe(gulp.dest('./build/icons'))
             .pipe(browserSync.stream());
 }
