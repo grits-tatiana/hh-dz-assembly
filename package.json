@@ -26,8 +26,5 @@
     "webpack-cli": "^3.3.10",
     "webpack-stream": "^5.2.1",
     "whatwg-fetch": "^3.0.0"
-  },
-  "browserslist": [
-    "> 0.1%"
-  ]
+  }
 }
