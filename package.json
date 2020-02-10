@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "js/index.js",
   "scripts": {
-    "build": "gulp --type production",
-    "dev": "gulp dev --type development"
+    "build": "gulp --type development",
+    "devD": "gulp dev --type development",
+    "buildP": "gulp --type production",
+    "devP": "gulp dev --type production"
   },
   "author": "Gritsenko Tatiana",
   "license": "MIT",

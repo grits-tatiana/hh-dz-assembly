@@ -16,8 +16,8 @@ gutil.env.type === 'development' ? dev = true : dev = false;
 
 function css(){
     return gulp.src('./css/styles.less')
-            .pipe(less())
             .pipe(gulpif(dev, sourcemaps.init()))
+            .pipe(less())
             .pipe(autoprefixerCSS())           
             .pipe(minifyCSS())
             .pipe(gulpif(dev, sourcemaps.write()))
